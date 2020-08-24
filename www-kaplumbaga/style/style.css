@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500;600;800;900&display=swap');
 
+:root {
+	--theme: #5d17eb;
+	--titles: #b2b2b2;
+	--default: #000;
+}
+
 html, body {
 	width: 100%;
 	height: 100%;
@@ -10,6 +16,10 @@ header {
 	padding: 20px;
 	width: 100%;
 	height: 10vh;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
 }
 
 textarea {
@@ -18,12 +28,24 @@ textarea {
 	font-family: monospace;
 }
 
-button, a.button {
+button, .button {
 	font-weight: 500 !important;
+	color: var(--theme);
+}
+
+.ui.logo img {
+	left: 0;
+	top: 0;
+	width: 200px;
+}
+
+.ui.titlearea {
+	margin: 0 20px !important;
 }
 
 .ui.title {
 	font-weight: 900;
+	color: var(--default);
 }
 
 .ui.subtitle {
