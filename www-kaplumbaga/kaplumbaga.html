@@ -1,205 +1,243 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-  </head>
-  <body>
-    
-<section class="section">
-    <div class="container">
-      <h1 class="title">
-        Kaplumbağa Programlama
-      </h1>
-      <p class="subtitle">
-        5. ve 6. sınıflar için
-      </p>
-    </div>
-</section>
-<div class="columns">
-  <div class="column">
-    <div>
-    <textarea id="editor" rows="16" cols="48" name="code_2" oninput="/*hackREPEAT(this.value);*/">
-ileri(200);
-sağa();
-ileri(200);
-sola(225);
-ileri(282);
-for (sayaç of saydır(30)) {
-  sağa(70);
-  ileri(sayaç * 2);
-}
-daire = (çap) => {
-   for (sayaç of saydır(36)) {
-      ileri(çap*Math.PI/36);sağa(10);
-   }
-}
-atla(70);
-daire(100);
-</textarea>
-    </div>
-    <div>
-    	<!--<input type="button" onclick="run()" value="ÇALIŞTIR">-->
-    	<a class="button is-primary" onclick="run()"><strong>Çalıştır</strong></a>
-    	<a class="button is-primary" onclick="stop()"><strong>Durdur</strong></a>
-    	<!--<input type="button" onclick="stop()" value="DURDUR">-->
-    	Hız:<select name="hız" id="speed">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5" selected>5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-      </select>
-    	<input hidden type="checkbox"  name="tekrarla" value="1" id="tekrarla"><!--Sürekli tekrarla</input>-->
-    	</div>
-    <div id = "p5Canvas">Çizim</div>
 
-    
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+  <link rel="stylesheet" href="./style/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<body>
+  <div class="ui container">
+    <!-- HEADER -->
+    <header>
+      <div class="ui logo">
+        <img src="../assets/logo_header.png" alt="geko logo">
+      </div>
+      <div class="ui titlearea">
+        <h1 class="ui title">
+          Kaplumbağa Programlama
+        </h1>
+        <h6 class="ui subtitle">
+          5. ve 6. sınıflar için
+        </h6>
+      </div>
+    </header>
+    <!-- HEADER END -->
+
+    <!-- COMPONENTS -->
+    <div class="ui grid">
+      <!-- Left Column -->
+      <div class="ui column">
+        <div class="ui fill row stacked">
+          <h3 class="ui title">Kod Editörü</h3>
+          <textarea id="editor" rows="16" cols="48" name="code_2" oninput="/*hackREPEAT(this.value);*/">
+            ileri(200);
+            sağa();
+            ileri(200);
+            sola(225);
+            ileri(282);
+            for (sayaç of saydır(30)) {
+              sağa(70);
+              ileri(sayaç * 2);
+            }
+            daire = (çap) => {
+              for (sayaç of saydır(36)) {
+                ileri(çap*Math.PI/36);sağa(10);
+              }
+            }
+            atla(70);
+            daire(100);
+          </textarea>
+        </div>
+      </div>
+      <!-- Left Column End-->
+
+      <!-- Right Column -->
+      <div class="ui column">
+        <div class="ui row">
+          <div class="item">
+            <h3 class="ui title">Komutlar</h3>
+            <a class="ui left attached button" onclick="run()"><strong>Çalıştır</strong></a>
+            <a class="ui right attached button red" onclick="stop()"><strong>Durdur</strong></a>
+            <!--<input type="button" onclick="stop()" value="DURDUR">-->
+          </div>
+          <div class="item">
+            <h3 class="ui title">Hız</h3>
+            <select id="speed" class="ui dropdown button" name="hız">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5" selected>5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+          <!-- <div class="item">
+            <input hidden type="checkbox"  name="tekrarla" value="1" id="tekrarla">
+          </div> -->
+        </div>
+        <div class="ui row stacked">
+          <h3>Çizim Alanı</h3>
+          <img src="https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png" width='100%' height='100%' alt="placeholder" />
+          <div class="ui fill canvasarea">
+            <div id="p5Canvas"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Right Column End-->
+
+    </div>
+    <!-- COMPONENTS END -->
   </div>
-  <div class="column is-one-half">
-  </div>
-</div>
+</body>
 
 <script>
-let sketch = function(p) {
-  let frame=0;
-  //let turtleimg=p.loadImage('turtle_1.png');
-  let turtleStrokeWeight=2;
-  p.setup = function() {
-    p.createCanvas(700, 410);
-    p.strokeWeight(turtleStrokeWeight);
+  // Get width, height of the column that the canvas will be drawn
+  let canvas = $('#p5Canvas'); // Jquery selector
+  var derawing = {};
+
+  let sketch = function(p) {
+    let frame=0;
+    //let turtleimg=p.loadImage('turtle_1.png');
+    let turtleStrokeWeight=2;
+    p.setup = function() {
+      const canvasWidth = canvas.width();
+      const canvasHeight = canvas.height();
+      drawing = p.createCanvas(canvasWidth, canvasHeight);
+      drawing.parent("p5Canvas");
+      p.strokeWeight(turtleStrokeWeight);
+    };
+
+    function myRelativePos(x1,y1,l,a) {
+      let arad=a*Math.PI/180;
+      let x2=x1+Math.cos(arad)*l;let y2=y1+Math.sin(arad)*l;
+      return([x2,y2])
+    }
+    function myRelativeLine(x1,y1,l,a) {//draw a line at an angle (in degrees)
+      let rpos=myRelativePos(x1,y1,l,a);
+      p.line(x1,y1,rpos[0],rpos[1]);
+      return(rpos);
+    }
+    function drawTurtle(x,y,a) {
+      p.strokeWeight(4);
+      let newpos=myRelativeLine(x,y,20,a);
+      let xt=newpos[0];let yt=newpos[1];
+      p.circle(xt,yt,40);//myRelativeLine(x,y,20,a);//overdrawn
+      let rpos=myRelativePos(xt,yt,25,a+45);p.circle(rpos[0],rpos[1],10);
+      rpos=myRelativePos(xt,yt,25,a+135);p.circle(rpos[0],rpos[1],10);
+      rpos=myRelativePos(xt,yt,25,a+225);p.circle(rpos[0],rpos[1],10);
+      rpos=myRelativePos(xt,yt,25,a+305);p.circle(rpos[0],rpos[1],10);
+      newpos=myRelativeLine(xt,yt,25,a);
+      xt=newpos[0];yt=newpos[1];
+      p.circle(xt,yt,10);
+      p.strokeWeight(turtleStrokeWeight);
+    }
+    p.draw = function() {
+      p.background(255, 255, 255);
+      //p.fill(255);
+      console.log("Drawing frame:"+frame);
+      let dangle=0.0;
+      let danglerad=dangle*Math.PI/180;
+      let x=drawing.width/2.0; let y=drawing.height/2.0;
+      for (let i=0;i<frame;i++) {
+        let current=stack[i];//console.log("current:",current);
+        let cmove=current[0];let cval=0.0+current[1];
+        if ((cmove=="move")||(cmove=="jump")) {
+          danglerad=dangle*Math.PI/180;
+          let xnext=x+Math.cos(danglerad)*cval;let ynext=y+Math.sin(danglerad)*cval;
+          if (cmove=="move") 
+            p.line(x,y,xnext,ynext);
+          x=xnext;y=ynext;//console.log("degree, x,y:",dangle,x,y);
+        } else if (cmove=="turn") {
+          dangle+=cval;
+        } 
+      }
+      frame++;
+      if (frame>=stack.length) {
+        frame=0;
+        //if (!(document.getElementById("tekrarla").checked)) {
+          console.log("Setting noloop");
+          p.noLoop();
+        //}
+        return;
+      } else {
+        //let turtle= p.createSprite(x-56/2,y-64/2,56,64);
+        //turtle.addImage(turtleimg);
+        //p.drawSprites();
+        //p.image(turtleimg,x-56/2,y-64/2);//adjust for the turtle midpoint
+        drawTurtle(x,y,dangle);
+      }
+    };
   };
 
-  function myRelativePos(x1,y1,l,a) {
-    let arad=a*Math.PI/180;
-    let x2=x1+Math.cos(arad)*l;let y2=y1+Math.sin(arad)*l;
-    return([x2,y2])
+  var stack=[];
+  var speed=5;
+  function stackReset() {
+    stack=[];
+    speed=parseInt(document.getElementById("speed").value);
+    console.log("Set speed to:",speed);
   }
-  function myRelativeLine(x1,y1,l,a) {//draw a line at an angle (in degrees)
-    let rpos=myRelativePos(x1,y1,l,a);
-    p.line(x1,y1,rpos[0],rpos[1]);
-    return(rpos);
+  function stackup(movetype,moveval) {
+    stack.push([movetype,moveval])
   }
-  function drawTurtle(x,y,a) {
-    p.strokeWeight(4);
-    let newpos=myRelativeLine(x,y,20,a);
-    let xt=newpos[0];let yt=newpos[1];
-    p.circle(xt,yt,40);//myRelativeLine(x,y,20,a);//overdrawn
-    let rpos=myRelativePos(xt,yt,25,a+45);p.circle(rpos[0],rpos[1],10);
-    rpos=myRelativePos(xt,yt,25,a+135);p.circle(rpos[0],rpos[1],10);
-    rpos=myRelativePos(xt,yt,25,a+225);p.circle(rpos[0],rpos[1],10);
-    rpos=myRelativePos(xt,yt,25,a+305);p.circle(rpos[0],rpos[1],10);
-    newpos=myRelativeLine(xt,yt,25,a);
-    xt=newpos[0];yt=newpos[1];
-    p.circle(xt,yt,10);
-    p.strokeWeight(turtleStrokeWeight);
+  ileri=function(x) {
+    for(let i=0;i<Math.floor(x/speed);i++) {stackup("move",speed);}
+      if ((x % speed)!=0) stackup("move", x%speed);
   }
-  p.draw = function() {
-    p.background(255, 255, 255);
-    //p.fill(255);
-    console.log("Drawing frame:"+frame);
-    let dangle=0.0;
-    let danglerad=dangle*Math.PI/180;
-    let x=p.width/2.0; let y=p.height/2.0;
-    for (let i=0;i<frame;i++) {
-      let current=stack[i];//console.log("current:",current);
-      let cmove=current[0];let cval=0.0+current[1];
-      if ((cmove=="move")||(cmove=="jump")) {
-        danglerad=dangle*Math.PI/180;
-        let xnext=x+Math.cos(danglerad)*cval;let ynext=y+Math.sin(danglerad)*cval;
-        if (cmove=="move") 
-          p.line(x,y,xnext,ynext);
-        x=xnext;y=ynext;//console.log("degree, x,y:",dangle,x,y);
-      } else if (cmove=="turn") {
-        dangle+=cval;
-      } 
-    }
-    frame++;
-    if (frame>=stack.length) {
-      frame=0;
-      //if (!(document.getElementById("tekrarla").checked)) {
-		    console.log("Setting noloop");
-		    p.noLoop();
-		  //}
-      return;
-    } else {
-      //let turtle= p.createSprite(x-56/2,y-64/2,56,64);
-      //turtle.addImage(turtleimg);
-      //p.drawSprites();
-      //p.image(turtleimg,x-56/2,y-64/2);//adjust for the turtle midpoint
-      drawTurtle(x,y,dangle);
-    }
-  };
-};
+  atla=function(x) {
+    for(let i=0;i<Math.floor(x/speed);i++) {stackup("jump",speed);}
+      if ((x % speed)!=0) stackup("jump", x%speed);
+  }
+  sağa=function(x=90.0) {stackup("turn",x);}
+  sola=function(x=90.0) {stackup("turn",-x);}
+  function* saydır(n) {for(let i=1;i<=n;i++) {yield i;}}
+  var myp;
+  //run();
 
-var stack=[];
-var speed=5;
-function stackReset() {
-  stack=[];
-  speed=parseInt(document.getElementById("speed").value);
-  console.log("Set speed to:",speed);
-}
-function stackup(movetype,moveval) {
-  stack.push([movetype,moveval])
-}
-ileri=function(x) {
-  for(let i=0;i<Math.floor(x/speed);i++) {stackup("move",speed);}
-  if ((x % speed)!=0) stackup("move", x%speed);
-}
-atla=function(x) {
-  for(let i=0;i<Math.floor(x/speed);i++) {stackup("jump",speed);}
-  if ((x % speed)!=0) stackup("jump", x%speed);
-}
-sağa=function(x=90.0) {stackup("turn",x);}
-sola=function(x=90.0) {stackup("turn",-x);}
-function* saydır(n) {for(let i=1;i<=n;i++) {yield i;}}
-var myp;
-//run();
-
-	function stop() {
-		if (myp) {
-			myp.remove();
-			console.log("myp removed");
-		}
-	}
-	function hackREPEAT(code) {
-	  console.log("hackREPEAT");
-	  let coderet="";
-	  let re = /\.*TEKRARLA.*/;
-	  for (line of code.split('\n')) {
-	      console.log("Line:",line);
-	      x=line.match(re);
-	      if (x!=null) {console.log("REPEATS:",x);}
-	      else {console.log("No match");}
-	  }
-	}
-	function run(){
-		//console.log("Run");
-		var code2 = document.getElementsByName('code_2')[0].value;
-		var codeText =  code2 ;
-    //hackREPEAT(codeText);
-		if (myp) {
-			myp.remove();
-		}
-		try {
-			let myprog = new Function(codeText);
-			stackReset();
-			myprog();
-			myp = new p5(sketch, "p5canvas");
-		} catch(e) {
-			alert(e);
-		}
-	}
-	run();
+  function stop() {
+    if (myp) {
+      myp.remove();
+      console.log("myp removed");
+    }
+  }
+  function hackREPEAT(code) {
+    console.log("hackREPEAT");
+    let coderet="";
+    let re = /\.*TEKRARLA.*/;
+    for (line of code.split('\n')) {
+      console.log("Line:",line);
+      x=line.match(re);
+      if (x!=null) {console.log("REPEATS:",x);}
+      else {console.log("No match");}
+    }
+  }
+  function run(){
+      //console.log("Run");
+      var code2 = document.getElementsByName('code_2')[0].value;
+      var codeText =  code2 ;
+      //hackREPEAT(codeText);
+      if (myp) {
+        myp.remove();
+      }
+      try {
+        let myprog = new Function(codeText);
+        stackReset();
+        myprog();
+        myp = new p5(sketch, "p5canvas");
+      } catch(e) {
+        alert(e);
+      }
+    }
+    run();
 </script>
 
-  </body>
 </html>
