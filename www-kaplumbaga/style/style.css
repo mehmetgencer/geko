@@ -1,0 +1,38 @@
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+header {
+	padding: 20px;
+	width: 100%;
+	height: 10vh;
+}
+
+textarea {
+	width: 80%;
+	min-height: 100%;
+}
+
+canvas,
+.ui.centered.stackable.grid {
+	height: 100%;
+}
+
+#speed {
+	margin: 10px !important;
+	padding: 0 10px !important;
+}
+
+.ui.segment {
+	height: 90vh;
+}
+
+.attached.label {
+	margin: 0 !important;
+}
+
+#p5Canvas {
+	position: relative;
+	width: 100%;
+}
