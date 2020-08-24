@@ -26,6 +26,7 @@ textarea {
 	width: 100%;
 	height: 100%;
 	font-family: monospace;
+	padding-top: 40px;
 }
 
 button, .button {
@@ -99,6 +100,8 @@ button, .button {
 	position: absolute;
 	left: 0;
 	top: 0;
+	padding: 0;
+	margin: 0;
 	width: 100%;
 	min-height: 30rem;
 	border: 1px solid #e7e7e7;
