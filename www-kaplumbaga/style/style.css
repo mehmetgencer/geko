@@ -175,7 +175,11 @@ pre, code {
 
 /* MEDIA QUERIES FOR MOBILE DEVICES */
 @media screen and (max-width: 1024px) {
+	.ui.column {
+		min-height: 720px;
+	}
 	.ui.grid {
+		height: 100%;
 		grid-template-columns: 1fr;
 	}
 }
