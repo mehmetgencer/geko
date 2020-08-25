@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
   <link rel="stylesheet" href="./style/style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
@@ -16,7 +15,7 @@
     <!-- HEADER -->
     <header>
       <div class="ui logo">
-        <img src="../assets/logo_header.png" alt="geko logo">
+        <a href="./kaplumbaga.html"><img src="../assets/logo_header.png" alt="geko logo"></a>
       </div>
       <div class="ui titlearea">
         <h1 class="ui title">
@@ -28,14 +27,13 @@
       </div>
     </header>
     <!-- HEADER END -->
-
+    
     <!-- COMPONENTS -->
     <div class="ui grid">
       <!-- Left Column -->
       <div class="ui column">
         <div class="ui fill row stacked">
-          <h3 class="ui title">Kod Editörü</h3>
-          <textarea id="editor" rows="16" cols="48" name="code_2" oninput="/*hackREPEAT(this.value);*/">
+          <div id="editor" class="js" name="code_2" oninput="/*hackREPEAT(this.value);*/">
             ileri(200);
             sağa();
             ileri(200);
@@ -52,18 +50,18 @@
             }
             atla(70);
             daire(100);
-          </textarea>
+          </div>
         </div>
       </div>
       <!-- Left Column End-->
-
+      
       <!-- Right Column -->
       <div class="ui column">
         <div class="ui row">
           <div class="item">
             <h3 class="ui title">Komutlar</h3>
-            <a class="ui left attached button" onclick="run()"><strong>Çalıştır</strong></a>
-            <a class="ui right attached button red" onclick="stop()"><strong>Durdur</strong></a>
+            <a id="btn_run" class="ui left attached button" onclick="run()"><strong>Çalıştır</strong></a>
+            <a id="btn_stop" class="ui right attached button red" onclick="stop()"><strong>Durdur</strong></a>
             <!--<input type="button" onclick="stop()" value="DURDUR">-->
           </div>
           <div class="item">
@@ -85,48 +83,74 @@
             <input hidden type="checkbox"  name="tekrarla" value="1" id="tekrarla">
           </div> -->
         </div>
+
         <div class="ui row stacked">
-          <h3>Çizim Alanı</h3>
-          <img src="https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png" width='100%' height='100%' alt="placeholder" />
-          <div class="ui fill canvasarea">
-            <div id="p5Canvas"></div>
+          <div id="p5Canvas">
+            <img src="../assets/blank_canvas.svg" alt="placeholder" />
           </div>
         </div>
       </div>
       <!-- Right Column End-->
-
+      
     </div>
     <!-- COMPONENTS END -->
   </div>
+  
+  <!-- External Plugin Scripts -->
+  <!-- JQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+  <!-- Remove Space from Code Snippets -->
+  <script src="./js/remove_space.js"></script>
+  <!-- ACE Editor: Highlighter, Editor, etc. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" integrity="sha512-GZ1RIgZaSc8rnco/8CXfRdCpDxRCphenIiZ2ztLy3XQfCbQUSCuk8IudvNHxkRA3oUg6q0qejgN/qqyG1duv5Q==" crossorigin="anonymous"></script>
 </body>
 
 <script>
+  /*
+  * ACE EDITOR INITIALIZATION
+  * highlighting
+  * indentation
+  */
+  var editor = ace.edit("editor");
+  var session = editor.getSession();
+  // console.log(session); See session object ^
+  var document = session.getDocument();
+  session.setUseWrapMode(true);
+  editor.setOptions({fontSize: "14pt", wrap: true});
+  editor.setTheme("ace/theme/chrome");
+  editor.session.setMode("ace/mode/javascript");
+  /* ACE Editor initialized */
+  
   // Get width, height of the column that the canvas will be drawn
   let canvas = $('#p5Canvas'); // Jquery selector
+  const canvasWidth = canvas.width();
+  const canvasHeight = canvas.height();
+  /* canvas width, height are taken */
+  
   var derawing = {};
-
   let sketch = function(p) {
     let frame=0;
-    //let turtleimg=p.loadImage('turtle_1.png');
     let turtleStrokeWeight=2;
+    //let turtleimg=p.loadImage('turtle_1.png');
+    
     p.setup = function() {
-      const canvasWidth = canvas.width();
-      const canvasHeight = canvas.height();
       drawing = p.createCanvas(canvasWidth, canvasHeight);
       drawing.parent("p5Canvas");
       p.strokeWeight(turtleStrokeWeight);
     };
-
+    
     function myRelativePos(x1,y1,l,a) {
       let arad=a*Math.PI/180;
       let x2=x1+Math.cos(arad)*l;let y2=y1+Math.sin(arad)*l;
       return([x2,y2])
     }
+    
     function myRelativeLine(x1,y1,l,a) {//draw a line at an angle (in degrees)
       let rpos=myRelativePos(x1,y1,l,a);
       p.line(x1,y1,rpos[0],rpos[1]);
       return(rpos);
     }
+    
     function drawTurtle(x,y,a) {
       p.strokeWeight(4);
       let newpos=myRelativeLine(x,y,20,a);
@@ -141,6 +165,7 @@
       p.circle(xt,yt,10);
       p.strokeWeight(turtleStrokeWeight);
     }
+    
     p.draw = function() {
       p.background(255, 255, 255);
       //p.fill(255);
@@ -155,7 +180,7 @@
           danglerad=dangle*Math.PI/180;
           let xnext=x+Math.cos(danglerad)*cval;let ynext=y+Math.sin(danglerad)*cval;
           if (cmove=="move") 
-            p.line(x,y,xnext,ynext);
+          p.line(x,y,xnext,ynext);
           x=xnext;y=ynext;//console.log("degree, x,y:",dangle,x,y);
         } else if (cmove=="turn") {
           dangle+=cval;
@@ -167,62 +192,66 @@
         //if (!(document.getElementById("tekrarla").checked)) {
           console.log("Setting noloop");
           p.noLoop();
-        //}
-        return;
-      } else {
-        //let turtle= p.createSprite(x-56/2,y-64/2,56,64);
-        //turtle.addImage(turtleimg);
-        //p.drawSprites();
-        //p.image(turtleimg,x-56/2,y-64/2);//adjust for the turtle midpoint
-        drawTurtle(x,y,dangle);
-      }
+          //}
+          return;
+        } else {
+          //let turtle= p.createSprite(x-56/2,y-64/2,56,64);
+          //turtle.addImage(turtleimg);
+          //p.drawSprites();
+          //p.image(turtleimg,x-56/2,y-64/2);//adjust for the turtle midpoint
+          drawTurtle(x,y,dangle);
+        }
+      };
     };
-  };
-
-  var stack=[];
-  var speed=5;
-  function stackReset() {
-    stack=[];
-    speed=parseInt(document.getElementById("speed").value);
-    console.log("Set speed to:",speed);
-  }
-  function stackup(movetype,moveval) {
-    stack.push([movetype,moveval])
-  }
-  ileri=function(x) {
-    for(let i=0;i<Math.floor(x/speed);i++) {stackup("move",speed);}
+    
+    var stack=[];
+    var speed=5;
+    function stackReset() {
+      stack=[];
+      speed=parseInt(document.getElementById("speed").value);
+      console.log("Set speed to:",speed);
+    }
+    function stackup(movetype,moveval) {
+      stack.push([movetype,moveval])
+    }
+    ileri=function(x) {
+      for(let i=0;i<Math.floor(x/speed);i++) {stackup("move",speed);}
       if ((x % speed)!=0) stackup("move", x%speed);
-  }
-  atla=function(x) {
-    for(let i=0;i<Math.floor(x/speed);i++) {stackup("jump",speed);}
+    }
+    atla=function(x) {
+      for(let i=0;i<Math.floor(x/speed);i++) {stackup("jump",speed);}
       if ((x % speed)!=0) stackup("jump", x%speed);
-  }
-  sağa=function(x=90.0) {stackup("turn",x);}
-  sola=function(x=90.0) {stackup("turn",-x);}
-  function* saydır(n) {for(let i=1;i<=n;i++) {yield i;}}
-  var myp;
-  //run();
-
-  function stop() {
-    if (myp) {
-      myp.remove();
-      console.log("myp removed");
     }
-  }
-  function hackREPEAT(code) {
-    console.log("hackREPEAT");
-    let coderet="";
-    let re = /\.*TEKRARLA.*/;
-    for (line of code.split('\n')) {
-      console.log("Line:",line);
-      x=line.match(re);
-      if (x!=null) {console.log("REPEATS:",x);}
-      else {console.log("No match");}
+    sağa=function(x=90.0) {stackup("turn",x);}
+    sola=function(x=90.0) {stackup("turn",-x);}
+    function* saydır(n) {for(let i=1;i<=n;i++) {yield i;}}
+    var myp;
+    //run();
+    
+    function stop() {
+      if (myp) {
+        myp.remove();
+        console.log("myp removed");
+        canvas.find('img').show();
+      }
     }
-  }
-  function run(){
+    function hackREPEAT(code) {
+      console.log("hackREPEAT");
+      let coderet="";
+      let re = /\.*TEKRARLA.*/;
+      for (line of code.split('\n')) {
+        console.log("Line:",line);
+        x=line.match(re);
+        if (x!=null) {console.log("REPEATS:",x);}
+        else {console.log("No match");}
+      }
+    }
+    function run(){
       //console.log("Run");
-      var code2 = document.getElementsByName('code_2')[0].value;
+      canvas.find('img').hide();
+      // Check ACE API: https://ace.c9.io/#nav=api&api=document
+      var code2 = editor.getValue();
+      console.log(code2);
       var codeText =  code2 ;
       //hackREPEAT(codeText);
       if (myp) {
@@ -238,6 +267,6 @@
       }
     }
     run();
-</script>
-
-</html>
+  </script>
+  
+  </html>
