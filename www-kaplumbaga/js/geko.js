@@ -1,106 +1,3 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
-  <link rel="stylesheet" href="./style/style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
-  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-</head>
-
-<body>
-  <div class="ui container">
-    <!-- HEADER -->
-    <header>
-      <div class="ui logo">
-        <img src="../assets/logo_header.png" alt="geko logo">
-      </div>
-      <div class="ui titlearea">
-        <h1 class="ui title">
-          Kaplumbağa Programlama
-        </h1>
-        <h6 class="ui subtitle">
-          5. ve 6. sınıflar için
-        </h6>
-      </div>
-    </header>
-    <!-- HEADER END -->
-
-    <!-- COMPONENTS -->
-    <div class="ui grid">
-      <!-- Left Column -->
-      <div class="ui column">
-        <div class="ui fill row stacked">
-          <h3 class="ui title">Kod Editörü</h3>
-          <textarea id="editor" rows="16" cols="48" name="code_2" oninput="/*hackREPEAT(this.value);*/">
-            ileri(200);
-            sağa();
-            ileri(200);
-            sola(225);
-            ileri(282);
-            for (sayaç of saydır(30)) {
-              sağa(70);
-              ileri(sayaç * 2);
-            }
-            daire = (çap) => {
-              for (sayaç of saydır(36)) {
-                ileri(çap*Math.PI/36);sağa(10);
-              }
-            }
-            atla(70);
-            daire(100);
-          </textarea>
-        </div>
-      </div>
-      <!-- Left Column End-->
-
-      <!-- Right Column -->
-      <div class="ui column">
-        <div class="ui row">
-          <div class="item">
-            <h3 class="ui title">Komutlar</h3>
-            <a class="ui left attached button" onclick="run()"><strong>Çalıştır</strong></a>
-            <a class="ui right attached button red" onclick="stop()"><strong>Durdur</strong></a>
-            <!--<input type="button" onclick="stop()" value="DURDUR">-->
-          </div>
-          <div class="item">
-            <h3 class="ui title">Hız</h3>
-            <select id="speed" class="ui dropdown button" name="hız">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5" selected>5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </select>
-          </div>
-          <!-- <div class="item">
-            <input hidden type="checkbox"  name="tekrarla" value="1" id="tekrarla">
-          </div> -->
-        </div>
-        <div class="ui row stacked">
-          <h3>Çizim Alanı</h3>
-          <img src="https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png" width='100%' height='100%' alt="placeholder" />
-          <div class="ui fill canvasarea">
-            <div id="p5Canvas"></div>
-          </div>
-        </div>
-      </div>
-      <!-- Right Column End-->
-
-    </div>
-    <!-- COMPONENTS END -->
-  </div>
-</body>
-
-<script>
   // Get width, height of the column that the canvas will be drawn
   let canvas = $('#p5Canvas'); // Jquery selector
   var derawing = {};
@@ -142,6 +39,9 @@
       p.strokeWeight(turtleStrokeWeight);
     }
     p.draw = function() {
+        /*
+        Tüm canvas'ı siler. Sonra "stack"in içinde "frame"'e kadar olan şeyleri çizdirir.
+        */
       p.background(255, 255, 255);
       //p.fill(255);
       console.log("Drawing frame:"+frame);
@@ -222,8 +122,9 @@
   }
   function run(){
       //console.log("Run");
-      var code2 = document.getElementsByName('code_2')[0].value;
-      var codeText =  code2 ;
+      //var code2 = document.getElementsByName('code_2')[0].value;
+      var code = document.getElementById('editor').value;
+      var codeText =  code ;
       //hackREPEAT(codeText);
       if (myp) {
         myp.remove();
@@ -238,6 +139,3 @@
       }
     }
     run();
-</script>
-
-</html>

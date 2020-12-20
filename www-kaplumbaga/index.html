@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+  <link rel="stylesheet" href="./style/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<body>
+  <div class="ui container">
+    <!-- HEADER -->
+    <header>
+      <div class="ui logo">
+        <img src="../assets/logo_header.png" alt="geko logo">
+      </div>
+      <div class="ui titlearea">
+        <h1 class="ui title">
+          Kaplumbağa Programlama
+        </h1>
+        <h6 class="ui subtitle">
+          5. ve 6. sınıflar için
+        </h6>
+      </div>
+    </header>
+    <!-- HEADER END -->
+
+    <!-- COMPONENTS -->
+    <div class="ui grid">
+      <!-- Left Column -->
+      <div class="ui column">
+        <div class="ui  row stacked">
+          <h3 class="ui title">Kod Editörü</h3>
+          <textarea id="editor" rows="24" cols="48" name="code_2" oninput="/*hackREPEAT(this.value);*/">
+ileri(200);
+sağa();
+ileri(200);
+sola(225);
+ileri(282);
+for (sayaç of saydır(30)) {
+  sağa(70);
+  ileri(sayaç * 2);
+}
+daire = (çap) => {
+  for (sayaç of saydır(36)) {
+    ileri(çap*Math.PI/36);sağa(10);
+  }
+}
+atla(70);
+daire(100);
+          </textarea>
+        </div>
+        <div class="ui row stacked">  <!-- <div class="ui fill row stacked"> -->
+ <!-- DOSYA SAKLAMA YUKLEME KONTROLU /////////////////////////////////////// -->
+        <table>
+            <tr><td></td></tr>
+            <tr>
+                <td>Kaydedilecek dosya adı:</td>
+                <td><input id="inputFileNameToSaveAs" value="benim-programim-1.js"></input></td>
+                <td><button onclick="saveTextAsFile()">Dosyaya kaydet</button></td>
+            </tr>
+            <tr>
+                <td>Yüklenecek dosya:</td>
+                <td><input type="file" id="fileToLoad"></td>
+                <td><button onclick="loadFileAsText()">Dosyadan yükle</button><td>
+            </tr>
+        </table>
+         
+        <script type="text/javascript" src="js/filemanager.js"> </script> 
+<!-- DOSYA SAKLAMA YUKLEME KONTROLU SONU //////////////////////////////////////////////////////////  -->
+        </div>
+        <div class="ui  row stacked">
+            <h3 class="ui title">Öğren</h3>
+            Her komuttan sonra noktalı virgül olmalıdır
+            <ul>
+            <li><b>ileri(100)</b>: çizerek 100 pixel ileri gider. 100 yerine istediğin sayıyı koy.</li>
+            <li><b>sağa() sola()</b>: Tam sağ veya sola dönüş</li>
+            <li><b>sağa(45) sola(135)</b>: Sağ veya sola açılı dönüş</li>
+            <li><b>for (sayaç of saydır(30)) { KOMUTLAR BURAYA}</b></li> İstenilen kez sayrırırken komutları tekrarlar. Komut içinde "sayaç" değişkeni kullanılabilir.
+            <li><b>atla(100)</b> Çizmeden 100 piksel ileri atlar </li>
+            <li> <b>yeniFonksiyon = (a) => { ileri(a); sağa(); ileri(a)) }</b></li> 'a' isimli bir değişken kullanan "yeniFonksiyon" isimli yeni bir fonksiyon tanımlar. Yeni fonksiyonunuzu 'yeniFonksiyon(25)' benzeri bir komutla çalıştırabilirsiniz. Fonksiyonun ve değiişkenin adını siz seçebilirsiniz.
+            <li>...</li>
+            </ul>
+        </div>
+        <div class="ui  row stacked">
+            <h3 class="ui title">Örnekler</h3>
+            <ul>
+            <li>...</li>
+            </ul>
+        </div>
+      </div>
+      <!-- Left Column End-->
+
+      <!-- Right Column -->
+      <div class="ui column">
+        <div class="ui row">
+          <div class="item">
+            <h3 class="ui title">Komutlar</h3>
+            <a class="ui left attached button" onclick="run()"><strong>Çalıştır</strong></a>
+            <a class="ui right attached button red" onclick="stop()"><strong>Durdur</strong></a>
+            <!--<input type="button" onclick="stop()" value="DURDUR">-->
+          </div>
+          <div class="item">
+            <h3 class="ui title">Hız</h3>
+            <select id="speed" class="ui dropdown button" name="hız">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5" selected>5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+          <!-- <div class="item">
+            <input hidden type="checkbox"  name="tekrarla" value="1" id="tekrarla">
+          </div> -->
+        </div>
+        <div class="ui row stacked">
+          <h3>Çizim Alanı</h3>
+          <img src="https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png" width='100%' height='100%' alt="placeholder" />
+          <div class="ui fill canvasarea">
+            <div id="p5Canvas"></div>
+          </div>
+        </div>
+        <div class="ui  row stacked">
+            <h3 class="ui title">Problemler</h3>
+            <ol>
+            <li>Kenarı 80 piksel olan bir kare çizin.</li>
+            <li>Yatay kenarı 120 yüksekliği 70 piksel olan bir dikdörtgen çizin.</li>
+            <li>Verilen kenar uzunluğunda kare çizen bir fonksiyon tanımlayın ve bir kez çağırın.</li>
+            <li>Verilen kenar uzunluğunda kare çizen bir fonksiyon tanımlayın ve bir sayaç içerisinde çağırarak 10, 20, ...100'e kadar kenar uzunluklarına sahip kareleri üstüste çizdirin.</li>
+            </ol>
+        </div>        
+      </div>
+      <!-- Right Column End-->
+
+    </div>
+    <!-- COMPONENTS END -->
+  </div>
+</body>
+
+<script src="js/geko.js"> </script>
+
+</html>
